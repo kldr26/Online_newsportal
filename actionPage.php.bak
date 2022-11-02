@@ -1,0 +1,36 @@
+<?php
+$firstName=$_POST["firstName"];
+$imageName=$_FILES["photo"]["name"];
+$imageType=$_FILES["photo"]["type"];
+$imageTempLoc==$_FILES["photo"]["tmp_name"];
+$imageSize=$_FILES["photo"]["size"];
+
+$image=base_encode(file_get_contents($imageTempLoc));
+
+$serverName="localhost";
+$userName="root";
+$password="";
+$dbName="staff";
+       
+$conn= new mysqli($serverName, $userName, $password, $dbName);
+$sql="INSERT INTO user_image(name,image) VALUES ($firstName', '$folder')";
+$conn->query($sql);
+$sql1="SELECT * FROM user_image";
+result=$conn->query($sql1);
+
+?>
+<table>
+<tr>
+<td>ID</td>
+<td>Name</td>
+<td>Image</td>
+</tr>
+<?php while($row=$result->fetch_row()){?>
+<tr>
+<td><?php echo $row[0];?></td>
+<td><?php echo $row[1];?></td>
+<td><?php echo '<img src="data:image;base64,'.$row[2].'; ?>" width=100px;>'?></td>
+</tr>
+<?php } ?>
+</table>
+
